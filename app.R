@@ -9,6 +9,8 @@ library(googlesheets4)
 
 
 #---- data ----
+gs4_deauth()
+
 angels <- range_read("15gXSuzJktpbkYqYbOCrdkbpW8jY38Oj52r2sswCSIQk")
 
 angels_gsheet <- "15gXSuzJktpbkYqYbOCrdkbpW8jY38Oj52r2sswCSIQk"
