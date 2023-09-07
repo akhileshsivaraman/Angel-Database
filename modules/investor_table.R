@@ -45,4 +45,4 @@ investor_table_app <- function(){
   shinyApp(ui, server)
 }
 
-investor_table_app()
+#investor_table_app()

@@ -9,6 +9,7 @@ library(tidyverse)
 #---- functions ----
 source("functions/common_investors.R")
 source("functions/search_by_sector.R")
+source("functions/li_link.R")
 
 
 #---- select_sector_UI ----
@@ -44,16 +45,22 @@ select_sector_server <- function(id, angel_data){
 
     investors <- eventReactive(input$button, {
       if (length(input$selected_sector) == 1){
-        search_by_sector(input$selected_sector, angel_data) # check what the output is, if tibble do the li_link in ifs
+        x <- search_by_sector(input$selected_sector, angel_data)
+        y <- map(x$LinkedIn, li_link)
+        x$LinkedIn <- y
+        return(x)
       } else if (length(input$selected_sector) > 1){
         sector_tibbles <- map(input$selected_sector, search_by_sector, angel_data)
-        common_investors(sector_tibbles, angel_data)
+        x <- common_investors(sector_tibbles, angel_data)
+        y <- map(x$LinkedIn, li_link)
+        x$LinkedIn <- y
+        return(x)
       }
     }, ignoreNULL = F)
 
     output$investors_table <- DT::renderDataTable({ # return a table
       investors()
-    }, options = list(pageLength = 15), rownames = F, fillContainer = T)
+    }, options = list(pageLength = 15), rownames = F, fillContainer = T, escape = F)
 
   })
 }
@@ -71,3 +78,5 @@ select_sector_app <- function(){
 
   shinyApp(ui, server)
 }
+
+#select_sector_app()
