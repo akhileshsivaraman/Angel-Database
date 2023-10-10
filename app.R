@@ -11,9 +11,10 @@ library(googlesheets4)
 #---- data ----
 gs4_deauth()
 
-angels <- range_read("15gXSuzJktpbkYqYbOCrdkbpW8jY38Oj52r2sswCSIQk")
+angels_gsheet <- source("sheet_id.R")$value
 
-angels_gsheet <- "15gXSuzJktpbkYqYbOCrdkbpW8jY38Oj52r2sswCSIQk"
+angels <- range_read(angels_gsheet)
+
 sector_names <- colnames(angels[5:ncol(angels)])
 angels_names <- pull(angels, Name)
 
