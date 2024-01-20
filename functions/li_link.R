@@ -1,7 +1,10 @@
 #---- li_link ----
 li_link <- function(URL){
-  a <- tags$a(href = as.character(URL), "LinkedIn")
-  paste(a)
+  if (!is.na(URL)){
+    a <- tags$a(href = as.character(URL), "LinkedIn")
+    paste(a)
+  } else if (is.na(URL)){
+    a <- ""
+    paste(a)
+  }
 }
-
-# can we add an if statement so it shows blank if there is no li link in the table

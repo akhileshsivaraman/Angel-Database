@@ -11,15 +11,18 @@ funds_table_UI <- function(id, sector_names = NULL){
   tagList(
     p("Browse through all the investment funds in the PACP database and filter by sector of interest using the drop down"),
 
-    selectInput(NS(id, "selected_sector"),
-                label = "Select a sector",
-                choices = sector_names,
-                selectize = T,
-                multiple = F,
-                selected = "AI"),
+    div(
+      selectInput(NS(id, "selected_sector"),
+                  label = "Select a sector",
+                  choices = sector_names,
+                  selectize = T,
+                  multiple = F,
+                  selected = "AI"),
 
-    actionButton(NS(id, "button"),
-                 label = "Search"),
+      actionButton(NS(id, "button"),
+                   label = "Search",
+                   style = "display: inline")
+    ),
 
     card(DT::dataTableOutput(NS(id, "funds_data")), fill = T)
   )
@@ -56,4 +59,4 @@ funds_table_app <- function(){
   shinyApp(ui, server)
 }
 
-funds_table_app()
+#funds_table_app()

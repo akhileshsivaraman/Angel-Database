@@ -26,6 +26,7 @@ source("modules/investor_table.R")
 source("modules/select_sector.R")
 source("modules/investor_search.R")
 source("modules/add_investor.R")
+source("modules/funds_table.R")
 
 
 #---- UI ----
@@ -38,8 +39,8 @@ ui <- page_navbar(
 
   theme = bs_theme(
     "navbar-bg" = "#ffffff",
-    bg = "#ffffff",
-    fg = "#0c2c54",
+    fg = "#ffffff",
+    bg = "#0c2c54",
     primary = "#f9c647",
     secondary = "#f9c647",
     base_font = font_google("Jost")

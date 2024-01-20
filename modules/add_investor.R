@@ -35,7 +35,7 @@ add_investor_UI <- function(id, sector_names = NULL){
 
     card(
       h2("Add an angel investor to the database"),
-      p("Note: if you wish to edit the entry for an angel investor, please contact Steph at ___ to submit an edit."),
+      p("Note: if you wish to edit the entry for an angel investor, please contact Steph at steph@pa-capitalpartners.com to submit an edit."),
 
       div(class = "input_group",
         textInput(NS(id, "investor_name"),
@@ -118,7 +118,7 @@ add_investor_server <- function(id, angel_data, angels_gsheet){
 
 
     exists_already <- eventReactive(input$add_investor_button, {
-      angels <- range_read("1AkQVxmEU95mQPDQ7KjS-ckjrzVnZvLKYRInk9dFBDik") |> #
+      angels <- range_read(angels_gsheet, sheet = "Angels") |> #
         mutate(across(Aerospace:Web3, ~replace_na(., 0))) |>
         mutate(across(Aerospace:Web3 & where(is.numeric), as.logical)) |>
         filter(Name == input$investor_name)
