@@ -39,7 +39,7 @@ investor_search_UI <- function(id, angels_names = NULL){
       helpText("Select an investor and how many similar investors you would like to find.")
     ),
 
-    h2("Search for investors similar to one of interest"),
+    h2("Search for angel investors similar to one of interest"),
 
     card(DT::dataTableOutput(NS(id, "similar_investors_table"), fill = T)),
 

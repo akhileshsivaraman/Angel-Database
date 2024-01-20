@@ -13,7 +13,8 @@ gs4_deauth()
 
 angels_gsheet <- source("sheet_id.R")$value
 
-angels <- range_read(angels_gsheet)
+angels <- range_read(angels_gsheet, sheet = "Angels")
+funds <- range_read(angels_gsheet, sheet = "Funds")
 
 sector_names <- colnames(angels[5:ncol(angels)])
 angels_names <- pull(angels, Name)
@@ -51,7 +52,7 @@ ui <- page_navbar(
   ),
 
   nav_panel(
-    title = "Angel Investors",
+    title = "All Angels",
     investor_table_UI("investor_table_module")
   ),
 
