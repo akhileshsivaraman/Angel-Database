@@ -16,9 +16,10 @@ angels_gsheet <- source("sheet_id.R")$value
 angels <- range_read(angels_gsheet, sheet = "Angels")
 funds <- range_read(angels_gsheet, sheet = "Funds")
 
-sector_names <- colnames(angels[5:ncol(angels)])
+angels_sector_names <- colnames(angels[5:ncol(angels)])
 angels_names <- pull(angels, Name)
 
+funds_sector_names <- unique(funds$Sector)
 
 #---- modules ----
 source("modules/investor_table.R")
@@ -46,25 +47,33 @@ ui <- page_navbar(
 
   fillable = T,
 
-  nav_panel(
-    title = "Search by Sector",
-    select_sector_UI("select_sector_module", sector_names = sector_names)
+  nav_panel(title = "Angel Investors",
+            navset_tab(
+              nav_panel(
+                title = "Search by Sector",
+                select_sector_UI("select_sector_module", sector_names = angels_sector_names)
+              ),
+
+              nav_panel(
+                title = "All Angels",
+                investor_table_UI("investor_table_module")
+              ),
+
+              nav_panel(
+                title = "Similar Investor Search",
+                investor_search_UI("investor_search_module", angels_names)
+              ),
+
+              nav_panel(
+                title = "Add an Investor",
+                add_investor_UI("add_investor_module", sector_names = angels_sector_names)
+              )
+            )
   ),
 
-  nav_panel(
-    title = "All Angels",
-    investor_table_UI("investor_table_module")
-  ),
-
-  nav_panel(
-    title = "Similar Investor Search",
-    investor_search_UI("investor_search_module", angels_names)
-  ),
-
-  nav_panel(
-    title = "Add an Investor",
-    add_investor_UI("add_investor_module", sector_names = sector_names)
-  )
+  nav_panel(title = "Investment Funds",
+            funds_table_UI("funds_table_module", sector_names = funds_sector_names)
+            )
 
 )
 
@@ -78,6 +87,8 @@ server <- function(input, output, session){
   investor_search_server("investor_search_module", angel_data = angels)
 
   add_investor_server("add_investor_module", angel_data = angels, angels_gsheet = angels_gsheet)
+
+  funds_table_server("funds_table_module", funds_data = funds)
 }
 
 
